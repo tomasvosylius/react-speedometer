@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import Body from "./components/Body";
+import Speedo from "./components/Speedo";
 import Throttle from "./components/Throttle";
 
 const minRPM = 2000;
@@ -62,7 +62,7 @@ function App() {
   return (
     <div className="App">
       <Throttle throttle={throttle} setThrottle={setThrottle} />
-      <Body RPM={RPM} gear={gear} speed={speed} />
+      <Speedo RPM={RPM} gear={gear} speed={speed} />
     </div>
   );
 }
