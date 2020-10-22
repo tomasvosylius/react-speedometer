@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Throttle.css";
 
 export default function Throttle(props) {
   return (
     <button
-      className="Accelerator"
-      onMouseDown={() => props.setAccelerator(true)}
-      onMouseUp={() => props.setAccelerator(false)}
-      style={{ color: props.accelerator ? "green" : "red" }}
+      className="Throttle"
+      onMouseDown={() => props.setThrottle(true)}
+      onMouseUp={() => props.setThrottle(false)}
+      style={{ color: props.throttle ? "green" : "red" }}
     >
-      {"Accelerator"}
+      {"Throttle"}
     </button>
   );
 }

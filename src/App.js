@@ -1,34 +1,35 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Body from "./components/Body";
 import Throttle from "./components/Throttle";
 
-function App() {
-  const [accelerator, setAccelerator] = useState(false);
-  const [RPM, setRPM] = useState(2000);
+const minRPM = 2000;
+const maxRPM = 8000;
 
-  useCallback;
+function App() {
+  const [throttle, setThrottle] = useState(false);
+  const [RPM, setRPM] = useState(minRPM);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!accelerator) {
-        if (RPM <= 2000) return;
+      if (!throttle) {
+        if (RPM <= minRPM) return;
 
-        setRPM(RPM - 10);
+        setRPM(Math.max(minRPM, RPM - 10));
         return;
       }
 
-      if (RPM >= 8000) return;
+      if (RPM >= maxRPM) return;
 
-      setRPM(RPM + 25);
+      setRPM(Math.min(maxRPM, RPM + 25));
     }, 10);
 
     return () => clearInterval(interval);
-  });
+  }, [RPM, throttle]);
 
   return (
     <div className="App">
-      <Throttle accelerator={accelerator} setAccelerator={setAccelerator} />
+      <Throttle throttle={throttle} setThrottle={setThrottle} />
       <Body RPM={RPM} />
     </div>
   );
