@@ -3,8 +3,8 @@ import "./App.css";
 import Speedo from "./components/Speedo";
 import Throttle from "./components/Throttle";
 
-const minRPM = 2000;
-const maxRPM = 8000;
+const minRPM = 900;
+const maxRPM = 6000;
 const maxSpeed = 120;
 
 function App() {
@@ -23,30 +23,47 @@ function App() {
       setSpeed(Math.max(0, speed - 0.35));
     };
 
+    const increateRPM = () => {
+      let newRPm =
+        RPM +
+        (maxRPM / Math.max(1, RPM)) * 7 +
+        (maxSpeed / Math.max(1, speed)) * 2.5;
+      setRPM(Math.min(maxRPM, newRPm));
+    };
+
+    const decreaseRPM = () => {
+      setRPM(Math.max(minRPM, RPM - (speed > 0 ? 35 : 60)));
+    };
+
     const addGear = (value) => {
+      if (value === 0) return;
+
       if (value < 0) {
         setRPM(maxRPM);
-      } else if (value !== gear) {
+      } else {
         setRPM(minRPM);
       }
+
       setGear(gear + value);
     };
 
     const interval = setInterval(() => {
       if (!throttle) {
         if (RPM > minRPM) {
-          setRPM(Math.max(minRPM, RPM - 10));
-        }
+          decreaseRPM();
+        } else if (RPM <= minRPM && gear > 1) addGear(-1);
 
         if (speed > 0) {
           decreaseSpeed();
-          if (RPM <= minRPM) addGear(-1);
+        } else if (gear > 1) {
+          setGear(1);
+          setRPM(minRPM);
         }
         return;
       }
 
       if (RPM < maxRPM) {
-        setRPM(Math.min(maxRPM, RPM + 25));
+        increateRPM();
       } else {
         addGear(1);
       }
@@ -62,7 +79,7 @@ function App() {
   return (
     <div className="App">
       <Throttle throttle={throttle} setThrottle={setThrottle} />
-      <Speedo RPM={RPM} gear={gear} speed={speed} />
+      <Speedo RPM={RPM} gear={gear} speed={speed} maxRPM={maxRPM} />
     </div>
   );
 }

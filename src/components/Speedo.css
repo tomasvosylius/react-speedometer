@@ -1,6 +1,25 @@
-.Body {
-  position: absolute;
+.Speedo {
+  text-align: center;
+  position: relative;
 
-  bottom: 50px;
-  right: 50px;
+  margin-top: 10px;
+}
+
+.Speedo .text {
+  color: white;
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.circles > svg:first-child {
+  position: absolute;
+  z-index: 0;
+}
+
+.circles > svg:not(:first-child) {
+  position: relative;
+  z-index: 2;
 }

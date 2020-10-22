@@ -9,7 +9,7 @@ export default function Throttle(props) {
       onMouseUp={() => props.setThrottle(false)}
       style={{ color: props.throttle ? "green" : "red" }}
     >
-      {"Throttle"}
+      {"Full gas!"}
     </button>
   );
 }
